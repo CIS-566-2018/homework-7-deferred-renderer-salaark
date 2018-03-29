@@ -12,11 +12,12 @@
 - Pointilism filter sets color to rounded pixel texture and sets size using color
 - Gaussian blurs the image using a Gaussian distribution
 - Anti-aliasing (similar edge-detection but with different parameters and a blur function)
+- Background is a moving 3D FBM noise function based on UV and time
 - Dat.gui allows for toggling of features to test their effects individually
 
-![](basic.png "Basic Shader")
-![](sobel.png "Sobel Filter")
-![](point.png "Pointilism")
+![](basic.png =250x "Anti-aliasing")
+![](sobel.png =250x "Sobel Filter")
+![](point.png =250x "Pointilism")
 
 ## Resources
 - Javascript Modules https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import
