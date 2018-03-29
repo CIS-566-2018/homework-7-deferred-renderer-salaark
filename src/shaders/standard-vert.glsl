@@ -17,8 +17,7 @@ out vec4 fs_Nor;
 out vec4 fs_Col;           
 out vec2 fs_UV;
 
-void main()
-{
+void main() {
     fs_Col = vs_Col;
     fs_UV = vs_UV;
     fs_UV.y = 1.0 - fs_UV.y;

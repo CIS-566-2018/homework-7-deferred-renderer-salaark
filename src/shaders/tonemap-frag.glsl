@@ -9,15 +9,10 @@ uniform float u_Time;
 
 
 void main() {
-	// TODO: proper tonemapping
-	// This shader just clamps the input color to the range [0, 1]
-	// and performs basic gamma correction.
-	// It does not properly handle HDR values; you must implement that.
-
+	// Tonemapping function by Jim Hejl and Richard Burgess-Dawson
 	vec3 color = texture(u_frame, fs_UV).xyz;
-	color = min(vec3(1.0), color);
-
-	// gamma correction
-	color = pow(color, vec3(1.0 / 2.2));
-	out_Col = vec4(color, 1.0);
+	color = pow(color, vec3(1.0 / 2.2)); // gamma correction
+    color *= 0.6; // Hardcoded Exposure Adjustment
+    vec3 x = vec3(max(0.0,color.r-0.004), max(0.0,color.g-0.004), max(0.0,color.b-0.004));
+    out_Col = vec4((x*(6.2*x+.5))/(x*(6.2*x+1.7)+0.06), 1.0);
 }

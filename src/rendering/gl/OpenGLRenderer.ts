@@ -33,6 +33,11 @@ class OpenGLRenderer {
 
   currentTime: number; // timer number to apply to all drawing shaders
 
+  sobel: boolean;
+  depth: boolean;
+  fxaa: boolean;
+  point: boolean;
+
   // the shader that renders from the gbuffers into the postbuffers
   deferredShader :  PostProcess = new PostProcess(
     new Shader(gl.FRAGMENT_SHADER, require('../../shaders/deferred-render.glsl'))
@@ -53,6 +58,24 @@ class OpenGLRenderer {
     this.post32Passes.push(pass);
   }
 
+  updatePost() {
+    this.post8Passes = [];
+    this.post32Passes = [];
+    // Order here matters, the effects look best in this order
+    if(this.point) {
+      this.add8BitPass(new PostProcess(new Shader(gl.FRAGMENT_SHADER, require('../../shaders/pointPost-frag.glsl'))));
+    }
+    if(this.sobel) {
+      this.add8BitPass(new PostProcess(new Shader(gl.FRAGMENT_SHADER, require('../../shaders/sobelPost-frag.glsl'))));
+    }
+    if(this.depth) {
+      this.add8BitPass(new PostProcess(new Shader(gl.FRAGMENT_SHADER, require('../../shaders/depthPost-frag.glsl'))));
+    }
+    if(this.fxaa) {
+      this.add8BitPass(new PostProcess(new Shader(gl.FRAGMENT_SHADER, require('../../shaders/FXAAPost-frag.glsl'))));
+    }
+  }
+
 
   constructor(public canvas: HTMLCanvasElement) {
     this.currentTime = 0.0;
@@ -66,10 +89,10 @@ class OpenGLRenderer {
     this.post32Passes = [];
 
     // TODO: these are placeholder post shaders, replace them with something good
-    this.add8BitPass(new PostProcess(new Shader(gl.FRAGMENT_SHADER, require('../../shaders/examplePost-frag.glsl'))));
-    this.add8BitPass(new PostProcess(new Shader(gl.FRAGMENT_SHADER, require('../../shaders/examplePost2-frag.glsl'))));
+    //this.add8BitPass(new PostProcess(new Shader(gl.FRAGMENT_SHADER, require('../../shaders/examplePost-frag.glsl'))));
+    //this.add8BitPass(new PostProcess(new Shader(gl.FRAGMENT_SHADER, require('../../shaders/examplePost2-frag.glsl'))));
 
-    this.add32BitPass(new PostProcess(new Shader(gl.FRAGMENT_SHADER, require('../../shaders/examplePost3-frag.glsl'))));
+    //this.add32BitPass(new PostProcess(new Shader(gl.FRAGMENT_SHADER, require('../../shaders/examplePost3-frag.glsl'))));
 
     if (!gl.getExtension("OES_texture_float_linear")) {
       console.error("OES_texture_float_linear not available");

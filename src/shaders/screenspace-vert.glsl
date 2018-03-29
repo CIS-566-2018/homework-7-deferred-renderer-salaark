@@ -9,6 +9,7 @@ in vec4 vs_Pos;
 in vec4 vs_Nor;
 in vec4 vs_Col;
 in vec2 vs_UV;
+in float vs_Depth;
 
 out vec2 fs_UV;
 

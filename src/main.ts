@@ -11,9 +11,12 @@ import ShaderProgram, {Shader} from './rendering/gl/ShaderProgram';
 import Texture from './rendering/gl/Texture';
 
 // Define an object with application parameters and button callbacks
-// const controls = {
-//   // Extra credit: Add interactivity
-// };
+const controls = {
+  "Sobel Filter": false,
+  "Gaussian Blur": false,
+  "Pointilism": false,
+  "Anti-aliasing": false
+};
 
 let square: Square;
 
@@ -67,7 +70,11 @@ function main() {
   document.body.appendChild(stats.domElement);
 
   // Add controls to the gui
-  // const gui = new DAT.GUI();
+  const gui = new DAT.GUI();
+  gui.add(controls, "Sobel Filter", false).onChange(updatePP);
+  gui.add(controls, "Pointilism", false).onChange(updatePP);
+  gui.add(controls, "Gaussian Blur", false).onChange(updatePP);
+  gui.add(controls, "Anti-aliasing", false).onChange(updatePP);
 
   // get canvas and webgl context
   const canvas = <HTMLCanvasElement> document.getElementById('canvas');
@@ -119,6 +126,15 @@ function main() {
 
     stats.end();
     requestAnimationFrame(tick);
+  }
+
+  function updatePP() {
+    renderer.sobel = controls["Sobel Filter"];
+    renderer.fxaa = controls["Anti-aliasing"];
+    renderer.depth = controls["Gaussian Blur"];
+    renderer.point = controls["Pointilism"];
+    renderer.updatePost();
+    console.log("PP updated");
   }
 
   window.addEventListener('resize', function() {
