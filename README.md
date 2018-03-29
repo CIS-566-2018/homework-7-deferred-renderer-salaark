@@ -15,9 +15,9 @@
 - Background is a moving 3D FBM noise function based on UV and time
 - Dat.gui allows for toggling of features to test their effects individually
 
-![](basic.png =250x "Anti-aliasing")
-![](sobel.png =250x "Sobel Filter")
-![](point.png =250x "Pointilism")
+![](basic.png "Anti-aliasing")
+![](sobel.png "Sobel Filter")
+![](point.png "Pointilism")
 
 ## Resources
 - Javascript Modules https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import
